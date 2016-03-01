@@ -20,7 +20,7 @@ fi
 #	exit 3
 #fi
 
-find `pwd` -name "*.h" -o -name "*.c*" > cscope.files
+find `pwd` -name "*.h" -o -name "*.c" > cscope.files
 cscope -kqbR -i cscope.files
 
 if [[ $? != 0 ]]; then
