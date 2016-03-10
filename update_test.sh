@@ -1,12 +1,19 @@
-#/bin/bash
+#!/bin/bash
+
+set -x
 
 IP=$1
+PORT=$2
+[[ "$PORT" == "" ]] && PORT=22
+
 DEPMOD=""
-[[ $IP == "" ]] && IP="sunyi-kr-skl-dom0"
+#[[ $IP == "" ]] && IP="sunyi-kr-skl-dom0"
 
 git checkout Makefile
 VERSION=`cat Makefile |grep "^EXTRAVERSION"`
 branch=`git branch | grep '*' | awk -F ' ' '{print $2}'`
+[[ "$branch" =~ '(' ]] && branch="" 
+
 COMMIT_FLAG=`git log |head -n 1 |awk -F ' ' '{print $2}' | cut -b-6`
 DATE=`date +%Y%m%d`
 NEW_VERSION=${VERSION}_${branch}_${COMMIT_FLAG}_${DATE}
@@ -28,12 +35,12 @@ echo "DEPMOD=${DEPMOD}"
 echo "DEPMOD_MAR=${DEPMOD_MAR}"
 
 echo "scp bzImage to /boot/..."
-scp arch/x86/boot/bzImage $IP:/boot/bzImage-${DEPMOD_MAR}
-[[ $? != 0 ]] && exit 1
+[[ $IP != "" ]] && scp -P $PORT arch/x86/boot/bzImage $IP:/boot/bzImage-${DEPMOD_MAR}
+[[ $IP != "" ]] && [[ $? != 0 ]] && exit 1
 
 echo "scp bzImage to /boot/efi/EFI/ubuntu/ ..."
-ssh $IP -C 'ls /boot/efi/EFI/' | grep ubuntu | xargs -I{} scp arch/x86/boot/bzImage $IP:/boot/efi/EFI/{}/bzImage-${DEPMOD_MAR}
-[[ $? != 0 ]] && exit 1
+[[ $IP != "" ]] && ssh $IP -p $PORT -C 'ls /boot/efi/EFI/' | grep ubuntu | xargs -I{} scp -P $PORT arch/x86/boot/bzImage $IP:/boot/efi/EFI/{}/bzImage-${DEPMOD_MAR}
+[[ $IP != "" ]] && [[ $? != 0 ]] && exit 1
 
 #echo "objdump vmlinux to /tmp/kernel-rb42.hex ..."
 #objdump -Slz vmlinux > /tmp/kernel-rb42.hex
@@ -55,19 +62,19 @@ tar cvf ${DEPMOD}.tar $DEPMOD > /dev/null
 
 echo "scp ${DEPMOD}.tar ..."
 #scp 4.2.0-rc8-vgt+.tar $IP:/lib/modules/
-scp ${DEPMOD}.tar $IP:/lib/modules/
-[[ $? != 0 ]] && exit 1
+[[ $IP != "" ]] && scp -P $PORT  ${DEPMOD}.tar $IP:/lib/modules/
+[[ $IP != "" ]] && [[ $? != 0 ]] && exit 1
 
 echo "scp initrd-${DEPMOD_MAR} to /boot/efi/EFI/ubuntu"
-ssh $IP -C 'ls /boot/efi/EFI/' | grep ubuntu | xargs -I{} scp initrd-${DEPMOD_MAR}  $IP:/boot/efi/EFI/{}/
-[[ $? != 0 ]] && exit 1
+[[ $IP != "" ]] && ssh $IP -p $PORT -C 'ls /boot/efi/EFI/' | grep ubuntu | xargs -I{} scp -P $PORT initrd-${DEPMOD_MAR}  $IP:/boot/efi/EFI/{}/
+[[ $IP != "" ]] && [[ $? != 0 ]] && exit 1
 
 echo "initrd-${DEPMOD_MAR}  to /boot/"
-scp initrd-${DEPMOD_MAR}  $IP:/boot/
-[[ $? != 0 ]] && exit 1
+[[ $IP != "" ]] && scp -P $PORT  initrd-${DEPMOD_MAR}  $IP:/boot/
+[[ $IP != "" ]] && [[ $? != 0 ]] && exit 1
 
 echo "tar xvf ${DEPMOD}.tar on test ..."
-ssh $IP -C "cd /lib/modules/; tar xvf ${DEPMOD}.tar > /dev/null"
-[[ $? != 0 ]] && exit 1
+[[ $IP != "" ]] && ssh $IP -p $PORT -C "cd /lib/modules/; tar xvf ${DEPMOD}.tar > /dev/null"
+[[ $IP != "" ]] && [[ $? != 0 ]] && exit 1
 
 cd -
