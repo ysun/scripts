@@ -1,6 +1,5 @@
 runtime! debian.vim
 
-"set cscopequickfix=s-,c-,d-,i-,t-,e-
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -239,7 +238,22 @@ if has("cscope")
 	 nmap <C-j>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 	 nmap <C-j>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 	 nmap <C-j>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+"	 if has('quickfix')
+"		 set cscopequickfix=s-,c-,d-,i-,t-,e-
+"	 endif
 endif
+
+"set cscopequickfix=s-,c-,d-,i-,t-,e-,g-,f-
+set cscopequickfix=s-!,c-!,d-!,i-!,t-!,e-!,g-!,f-!
+"nnoremap <silent> <F9> :copen<CR><CR>
+"https://github.com/milkypostman/vim-togglelist
+nmap <script> <silent> <F9> :call ToggleQuickfixList()<CR>
+copen
+
+let Cscope_OpenQuickfixWindow = 1 	"执行cscope cmd后打开quickfix window"
+let Cscope_JumpError = 0 			"跳转到first item"
+let Cscope_PopupMenu = 1 			"use Popup menu"
+let Cscope_ToolsMenu = 0			"use Tools menu"
 
 " 按F8按钮，在窗口的左侧出现taglist的窗口,像vc的左侧的workpace
 nnoremap <silent> <F8> :TlistToggle<CR><CR>

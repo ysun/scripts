@@ -21,7 +21,11 @@ fi
 #fi
 
 find `pwd` -name "*.h" -o -name "*.c" > cscope.files
-cscope -kqbR -i cscope.files
+sed -i '/wlan\/fwcommon/d' cscope.files
+sed -i '/wlan\/package/d' cscope.files
+
+#cscope -kqbR -i cscope.files
+cscope -kqb -i cscope.files
 
 if [[ $? != 0 ]]; then
 	echo "Error: generating cscope!"
