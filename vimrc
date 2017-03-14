@@ -165,7 +165,7 @@ endif
 "set smartcase		" Do smart case matching
 "set incsearch		" Incremental search
 "set autowrite		" Automatically save before commands like :next and :make
-"set hidden		" Hide buffers when they are abandoned
+set hidden		" Hide buffers when they are abandoned
 "set mouse=a		" Enable mouse usage (all modes)
 
 " Source a global configuration file if available
@@ -230,14 +230,14 @@ if has("cscope")
 	 " show msg when any other cscope db added
 	 set cscopeverbose
 	
-	 nmap <C-j>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-	 nmap <C-j>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-	 nmap <C-j>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-	 nmap <C-j>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-	 nmap <C-j>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-	 nmap <C-j>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-	 nmap <C-j>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-	 nmap <C-j>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+	 nmap <C-j>s :cs find s <C-R>=expand("<cword>")<CR><CR>:wincmd j<CR>
+	 nmap <C-j>g :cs find g <C-R>=expand("<cword>")<CR><CR>:wincmd j<CR>
+	 nmap <C-j>c :cs find c <C-R>=expand("<cword>")<CR><CR>:wincmd j<CR>
+	 nmap <C-j>t :cs find t <C-R>=expand("<cword>")<CR><CR>:wincmd j<CR>
+	 nmap <C-j>e :cs find e <C-R>=expand("<cword>")<CR><CR>:wincmd j<CR>
+	 nmap <C-j>f :cs find f <C-R>=expand("<cfile>")<CR><CR>:wincmd j<CR>
+	 nmap <C-j>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:wincmd j<CR>
+	 nmap <C-j>d :cs find d <C-R>=expand("<cword>")<CR><CR>:wincmd j<CR>
 "	 if has('quickfix')
 "		 set cscopequickfix=s-,c-,d-,i-,t-,e-
 "	 endif
@@ -247,19 +247,24 @@ endif
 set cscopequickfix=s-!,c-!,d-!,i-!,t-!,e-!,g-!,f-!
 "nnoremap <silent> <F9> :copen<CR><CR>
 "https://github.com/milkypostman/vim-togglelist
-nmap <script> <silent> <F9> :call ToggleQuickfixList()<CR>
+nmap <script> <silent> <F9> :TlistToggle<CR> :call ToggleQuickfixList()<CR> :TlistToggle<CR>
 copen
 
-let Cscope_OpenQuickfixWindow = 1 	"执行cscope cmd后打开quickfix window"
-let Cscope_JumpError = 0 			"跳转到first item"
-let Cscope_PopupMenu = 1 			"use Popup menu"
-let Cscope_ToolsMenu = 0			"use Tools menu"
+"let Cscope_OpenQuickfixWindow = 1 	"执行cscope cmd后打开quickfix window"
+"let Cscope_JumpError = 1 			"跳转到first item"
+"let Cscope_PopupMenu = 1 			"use Popup menu"
+"let Cscope_ToolsMenu = 0			"use Tools menu"
 
 " 按F8按钮，在窗口的左侧出现taglist的窗口,像vc的左侧的workpace
-nnoremap <silent> <F8> :TlistToggle<CR><CR>
-let Tlist_Show_One_File=0                    " 只显示当前文件的tags
+nnoremap <silent> <F8> :TlistToggle<CR>
+"let Tlist_Show_One_File=0                    " 只显示当前文件的tags
 let Tlist_Exit_OnlyWindow=1                  " 如果Taglist窗口是最后一个窗口则退出Vim
-let Tlist_Use_Right_Window=0                 " 在右侧窗口中显示
-let Tlist_File_Fold_Auto_Close=1             " 自动折叠
+"let Tlist_Use_Right_Window=0                 " 在右侧窗口中显示
+"let Tlist_File_Fold_Auto_Close=1             " 自动折叠
 let Tlist_Auto_Open = 1
+
+"let g:miniBufExplMapWindowNavVim = 1
+"let g:miniBufExplMapWindowNavArrows = 1
+"let g:miniBufExplMapCTabSwitchBufs = 1
+"let g:miniBufExplModSelTarget = 1
 
