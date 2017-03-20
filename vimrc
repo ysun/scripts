@@ -2,11 +2,17 @@ runtime! debian.vim
 
 
 set nocompatible              " be iMproved, required
+
+"indent: 如果用了:set indent,:set ai 等自动缩进，想用退格键将字段缩进的删掉，必须设置这个选项。否则不响应。
+"eol:如果插入模式下在行开头，想通过退格键合并两行，需要设置eol。
+"start：要想删除此次插入前的输入，需设置这个。
+set backspace=indent,eol,start
+
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 "set rtp+=/etc/vim/bundle/Vundle.vim
-set rtp+=/etc/vim/bundle/vundle
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 "call vundle#rc()
 " alternatively, pass a path where Vundle should install plugins
@@ -14,10 +20,11 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-Bundle 'gmarik/vundle'
+"Bundle 'gmarik/vundle'
 Bundle 'Valloric/YouCompleteMe'
-Bundle 'scrooloose/syntastic'
-Bundle 'rdnetto/YCM-Generator'
+"Bundle 'scrooloose/syntastic'
+"Bundle 'rdnetto/YCM-Generator'
+Plugin 'scrooloose/nerdtree'
 
 "Plugin 'tpope/vim-fugitive'
 "Plugin 'Lokaltog/vim-easymotion'
@@ -67,7 +74,7 @@ filetype plugin indent on    " required
 
 let mapleader = ","  " 这个leader就映射为逗号“，”
 " let g:ycm_global_ycm_extra_conf = '/etc/vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'   "配置默认的ycm_extra_conf.py
-let g:ycm_global_ycm_extra_conf = '/etc/vim/bundle/YouCompleteMe/ycm_extra_conf.py'   "configure for linux kernel
+let g:ycm_global_ycm_extra_conf = '/home/mobaxterm/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'   "configure for linux kernel
 let g:ycm_auto_trigger = 1
 
 let g:ycm_show_diagnostics_ui = 0
@@ -105,6 +112,7 @@ let g:ycm_seed_identifiers_with_syntax=1
 let g:ycm_key_invoke_completion = '<M-;>'
 " 设置转到定义处的快捷键为ALT + G，这个功能非常赞
 "nmap <M-g> :YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
+"let g:loaded_youcompleteme = 1
 
 
 " ----- scrooloose/syntastic settings -----
@@ -247,8 +255,10 @@ endif
 set cscopequickfix=s-!,c-!,d-!,i-!,t-!,e-!,g-!,f-!
 "nnoremap <silent> <F9> :copen<CR><CR>
 "https://github.com/milkypostman/vim-togglelist
-nmap <script> <silent> <F9> :TlistToggle<CR> :call ToggleQuickfixList()<CR> :TlistToggle<CR>
+"nmap <script> <silent> <F9> :TlistToggle<CR> :call ToggleQuickfixList()<CR> :TlistToggle<CR>
+nmap <script> <silent> <F9> :call ToggleQuickfixList()<CR>
 copen
+"https://github.com/fholgado/minibufexpl.vim
 
 "let Cscope_OpenQuickfixWindow = 1 	"执行cscope cmd后打开quickfix window"
 "let Cscope_JumpError = 1 			"跳转到first item"
@@ -256,15 +266,34 @@ copen
 "let Cscope_ToolsMenu = 0			"use Tools menu"
 
 " 按F8按钮，在窗口的左侧出现taglist的窗口,像vc的左侧的workpace
+"nnoremap <silent> <F8> :TlistToggle<CR> :vert resize 180<CR>
 nnoremap <silent> <F8> :TlistToggle<CR>
 "let Tlist_Show_One_File=0                    " 只显示当前文件的tags
 let Tlist_Exit_OnlyWindow=1                  " 如果Taglist窗口是最后一个窗口则退出Vim
 "let Tlist_Use_Right_Window=0                 " 在右侧窗口中显示
 "let Tlist_File_Fold_Auto_Close=1             " 自动折叠
-let Tlist_Auto_Open = 1
+"let Tlist_Auto_Open = 1
 
 "let g:miniBufExplMapWindowNavVim = 1
 "let g:miniBufExplMapWindowNavArrows = 1
 "let g:miniBufExplMapCTabSwitchBufs = 1
 "let g:miniBufExplModSelTarget = 1
 
+" NERDTree config
+"map <F2> :NERDTreeToggle<CR> :vert resize 30<CR>
+map <F2> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&b:NERDTreeType == "primary") | q | endif
+
+"-- WinManager setting --
+let g:winManagerWindowLayout='FileExplorer|TagList' " 设置我们要管理的插件
+"let g:persistentBehaviour=0 " 如果所有编辑文件都关闭了，退出vim
+nmap wm :WMToggle<cr>
+
+nmap <C-k>p :bprev<CR>
+nmap <C-k>n :bnext<CR>
+nmap <C-k>d :bd<CR>
+nmap <C-k>D :bd!<CR>
+
+for f in split(glob('~/.vim/plugin/*.vim'), '\n')
+    exe 'source' f
+endfor
