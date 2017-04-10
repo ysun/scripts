@@ -2,6 +2,8 @@ runtime! debian.vim
 
 
 set nocompatible              " be iMproved, required
+set nu
+set ruler
 
 "indent: 如果用了:set indent,:set ai 等自动缩进，想用退格键将字段缩进的删掉，必须设置这个选项。否则不响应。
 "eol:如果插入模式下在行开头，想通过退格键合并两行，需要设置eol。
@@ -77,7 +79,7 @@ let mapleader = ","  " 这个leader就映射为逗号“，”
 let g:ycm_global_ycm_extra_conf = '/home/mobaxterm/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'   "configure for linux kernel
 let g:ycm_auto_trigger = 1
 
-let g:ycm_show_diagnostics_ui = 0
+let g:ycm_show_diagnostics_ui = 1
 
 nnoremap <leader>jl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>jf :YcmCompleter GoToDefinition<CR>
@@ -221,6 +223,8 @@ else
     endif
 endif 
 
+cs add /mnt/c/Perforce/wpk_10_inc/cscope.out
+
 if has("cscope")
 	set cscopetag   " 使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳来跳去
 	" check cscope for definition of a symbol before checking ctags:
@@ -297,3 +301,16 @@ nmap <C-k>D :bd!<CR>
 for f in split(glob('~/.vim/plugin/*.vim'), '\n')
     exe 'source' f
 endfor
+
+" 状态栏
+set laststatus=2      " 总是显示状态栏
+highlight StatusLine cterm=bold ctermfg=yellow ctermbg=blue
+"" 获取当前路径，将$HOME转化为~
+"function! CurDir()
+"    let curdir = substitute(getcwd(), $HOME, "~", "g")
+"    return curdir
+"endfunction
+"set statusline=[%n]\ %f%m%r%h\ \|\ \ pwd:\ %{CurDir()}\ \ \|%=\|\ %l,%c\ %p%%\ \|\ ascii=%b,hex=%b%{((&fenc==\"\")?\"\":\"\ \|\ \".&fenc)}\ \|\ %{$USER}\ @\ %{hostname()}\
+
+set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%]
+
