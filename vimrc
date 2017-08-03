@@ -79,7 +79,7 @@ let mapleader = ","  " 这个leader就映射为逗号“，”
 let g:ycm_global_ycm_extra_conf = '/home/mobaxterm/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'   "configure for linux kernel
 let g:ycm_auto_trigger = 1
 
-let g:ycm_show_diagnostics_ui = 1
+let g:ycm_show_diagnostics_ui = 0	"语法检查，不太好用
 
 nnoremap <leader>jl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>jf :YcmCompleter GoToDefinition<CR>
@@ -224,6 +224,7 @@ else
 endif 
 
 cs add /mnt/c/Perforce/wpk_10_inc/cscope.out
+cs add fwcommon/cscope.out
 
 if has("cscope")
 	set cscopetag   " 使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳来跳去
@@ -297,6 +298,8 @@ nmap <C-k>p :bprev<CR>
 nmap <C-k>n :bnext<CR>
 nmap <C-k>d :bd<CR>
 nmap <C-k>D :bd!<CR>
+
+nmap <F3> :vim /<C-R>=expand("<cword>")<CR>/%<CR>
 
 for f in split(glob('~/.vim/plugin/*.vim'), '\n')
     exe 'source' f
