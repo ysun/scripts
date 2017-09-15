@@ -14,13 +14,14 @@ if [[ $? != 0 ]]; then
 	exit 2
 fi
 
-#ctags -R
-#if [[ $? != 0 ]]; then
-#	echo "Error: generating ctags!"
-#	exit 3
-#fi
+ctags -R host_cmn acpi host pcidrv 
 
-find `pwd` -name "*.h" -o -name "*.c" > cscope.files
+if [[ $? != 0 ]]; then
+	echo "Error: generating ctags!"
+	exit 3
+fi
+
+find `pwd` -name "*.h" -o -name "*.c" -o -name "*.hpp" -o -name "*.cpp"> cscope.files
 sed -i '/wlan\/fwcommon/d' cscope.files
 sed -i '/wlan\/package/d' cscope.files
 
