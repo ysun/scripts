@@ -256,8 +256,11 @@ if has("cscope")
 "	 endif
 endif
 
-"set cscopequickfix=s-,c-,d-,i-,t-,e-,g-,f-
-set cscopequickfix=s-!,c-!,d-!,i-!,t-!,e-!,g-!,f-!
+"nnoremap <C-j>s yiw:cs find s <C-R>=expand("<cword>")<CR><CR>:bd<CR>:cwindow<CR>/<C-R>0<CR>
+""nnoremap <leader>s yiw:cs find s <C-R>=expand("<cword>")<CR><CR>:bd<CR>:cwindow<CR>/<C-R>0<CR>
+
+set cscopequickfix=s-,c-,d-,i-,t-,e-,g-,f-
+" set cscopequickfix=s-!,c-!,d-!,i-!,t-!,e-!,g-!,f-!
 "nnoremap <silent> <F9> :copen<CR><CR>
 "https://github.com/milkypostman/vim-togglelist
 "nmap <script> <silent> <F9> :TlistToggle<CR> :call ToggleQuickfixList()<CR> :TlistToggle<CR>
