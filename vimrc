@@ -28,36 +28,15 @@ Bundle 'Valloric/YouCompleteMe'
 "Bundle 'rdnetto/YCM-Generator'
 Plugin 'scrooloose/nerdtree'
 
-"Plugin 'tpope/vim-fugitive'
-"Plugin 'Lokaltog/vim-easymotion'
-"Plugin 'tpope/vim-rails.git'
-"" The sparkup vim script is in a subdirectory of this repo called vim.
-"" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-"" scripts from http://vim-scripts.org/vim/scripts.html
-"Plugin 'L9'
-"Plugin 'FuzzyFinder'
-" scripts not on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
+"vim-markdown plugin for syntax highlight
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+"vim-markdown realtime preview
+"Plugin 'suan/vim-instant-markdown'
+"Plugin 'isnowfy/python-vim-instant-markdown'
+Plugin 'iamcco/markdown-preview.vim'
 
-
-" " The following are examples of different formats supported.
-" " Keep Plugin commands between vundle#begin/end.
-" " plugin on GitHub repo
-" Plugin 'tpope/vim-fugitive'
-" " plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" " Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
-" " git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" " The sparkup vim script is in a subdirectory of this repo called vim.
-" " Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" " Avoid a name conflict with L9
-" Plugin 'user/L9', {'name': 'newL9'}
+Bundle 'bling/vim-airline'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -75,8 +54,9 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 let mapleader = ","  " 这个leader就映射为逗号“，”
+let g:ycm_global_ycm_extra_conf = '/root/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'   "配置默认的ycm_extra_conf.py
 " let g:ycm_global_ycm_extra_conf = '/etc/vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'   "配置默认的ycm_extra_conf.py
-let g:ycm_global_ycm_extra_conf = '/home/mobaxterm/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'   "configure for linux kernel
+" let g:ycm_global_ycm_extra_conf = '/home/mobaxterm/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'   "configure for linux kernel
 let g:ycm_auto_trigger = 1
 
 let g:ycm_show_diagnostics_ui = 0	"语法检查，不太好用
@@ -189,6 +169,7 @@ set ut=10        " refresh occurs every second;
 set hlsearch
 set tags=tags;    "   其中 ; 不能没有
 set autochdir
+set paste
 
 function! AutoLoadCTagsAndCScope()
     let max = 7
@@ -223,8 +204,8 @@ else
     endif
 endif 
 
-cs add /mnt/c/Perforce/wpk_10_inc/cscope.out
-cs add fwcommon/cscope.out
+"cs add /mnt/c/Perforce/wpk_10_inc/cscope.out
+"cs add fwcommon/cscope.out
 
 if has("cscope")
 	set cscopetag   " 使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳来跳去
@@ -268,13 +249,7 @@ nmap <script> <silent> <F9> :call ToggleQuickfixList()<CR>
 copen
 "https://github.com/fholgado/minibufexpl.vim
 
-"let Cscope_OpenQuickfixWindow = 1 	"执行cscope cmd后打开quickfix window"
-"let Cscope_JumpError = 1 			"跳转到first item"
-"let Cscope_PopupMenu = 1 			"use Popup menu"
-"let Cscope_ToolsMenu = 0			"use Tools menu"
-
 " 按F8按钮，在窗口的左侧出现taglist的窗口,像vc的左侧的workpace
-"nnoremap <silent> <F8> :TlistToggle<CR> :vert resize 180<CR>
 nnoremap <silent> <F8> :TlistToggle<CR>
 "let Tlist_Show_One_File=0                    " 只显示当前文件的tags
 let Tlist_Exit_OnlyWindow=1                  " 如果Taglist窗口是最后一个窗口则退出Vim
@@ -320,3 +295,30 @@ highlight StatusLine cterm=bold ctermfg=yellow ctermbg=blue
 
 set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%]
 
+"Config for Plugin 'iamcco/markdown-preview.vim' another preview.
+let g:mkdp_path_to_chrome = "chromium-browser --no-sandbox"
+" path to the chrome or the command to open chrome(or other modern browsers)
+let g:mkdp_auto_start = 0
+" set to 1, the vim will open the preview window once enter the markdown
+" buffer
+let g:mkdp_auto_open = 0
+" set to 1, the vim will auto open preview window when you edit the
+" markdown file
+let g:mkdp_auto_close = 1
+" set to 1, the vim will auto close current preview window when change
+" from markdown buffer to another buffer
+let g:mkdp_refresh_slow = 0
+" set to 1, the vim will just refresh markdown when save the buffer or
+" leave from insert mode, default 0 is auto refresh markdown as you edit or
+" move the cursor
+let g:mkdp_command_for_global = 0
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it just can be use in markdown file
+nmap <silent> <F9> <Plug>MarkdownPreview        " 普通模式
+imap <silent> <F9> <Plug>MarkdownPreview        " 插入模式
+nmap <silent> <F10> <Plug>StopMarkdownPreview    " 普通模式
+imap <silent> <F10> <Plug>StopMarkdownPreview    " 插入模式
+
+"Chinese messy Code
+let &termencoding=&encoding
+set fileencodings=utf-8,gbk
