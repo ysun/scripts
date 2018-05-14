@@ -54,6 +54,8 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 let mapleader = ","  " 这个leader就映射为逗号“，”
+let g:mapleader = ","
+
 let g:ycm_global_ycm_extra_conf = '/root/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'   "配置默认的ycm_extra_conf.py
 " let g:ycm_global_ycm_extra_conf = '/etc/vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'   "配置默认的ycm_extra_conf.py
 " let g:ycm_global_ycm_extra_conf = '/home/mobaxterm/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'   "configure for linux kernel
@@ -322,3 +324,31 @@ imap <silent> <F10> <Plug>StopMarkdownPreview    " 插入模式
 "Chinese messy Code
 let &termencoding=&encoding
 set fileencodings=utf-8,gbk
+
+" 定义快捷键到行首和行尾
+nmap LB 0
+nmap LE $
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至 vim
+nmap <leader>p "+p
+" 定义快捷键关闭当前分割窗口
+nmap <Leader>q :q<CR>
+" 定义快捷键保存当前窗口内容
+nmap <leader>w :w<CR>
+" 定义快捷键保存所有窗口内容并退出 vim
+nmap <leader>WQ :wa<CR>:q<CR>
+" 不做任何保存，直接退出 vim
+nmap <leader>Q :qa!<CR>
+" 依次遍历子窗口
+nnoremap nw <C-W><C-W>
+" 跳转至右方的窗口
+nnoremap <leader>lw <C-W>l
+" 跳转至左方的窗口
+nnoremap <leader>hw <C-W>h
+" 跳转至上方的子窗口
+nnoremap <leader>kw <C-W>k
+" 跳转至下方的子窗口
+nnoremap <leader>jw <C-W>j
+" 定义快捷键在结对符之间跳转
+nmap <leader>M %

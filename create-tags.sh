@@ -14,7 +14,8 @@ if [[ $? != 0 ]]; then
 	exit 2
 fi
 
-ctags -R host_cmn acpi host pcidrv 
+#ctags -R host_cmn acpi host pcidrv 
+ctags -R #host_cmn acpi host pcidrv 
 
 if [[ $? != 0 ]]; then
 	echo "Error: generating ctags!"

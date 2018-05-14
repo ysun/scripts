@@ -1,0 +1,5 @@
+#!/bin/sh
+
+switch=$(brctl show| sed -n 2p |awk '{print $1}')
+/sbin/ifconfig $1 0.0.0.0 up
+/usr/sbin/brctl addif ${switch} $1
