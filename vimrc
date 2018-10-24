@@ -35,8 +35,9 @@ Plugin 'plasticboy/vim-markdown'
 "Plugin 'suan/vim-instant-markdown'
 "Plugin 'isnowfy/python-vim-instant-markdown'
 Plugin 'iamcco/markdown-preview.vim'
+Plugin 'iamcco/mathjax-support-for-mkdp'
 
-Bundle 'bling/vim-airline'
+"Bundle 'bling/vim-airline'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -108,6 +109,7 @@ augroup mySyntastic
 augroup END
 
 colorscheme desert
+autocmd BufNewFile,BufRead *.ino set syntax=c
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
