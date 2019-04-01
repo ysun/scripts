@@ -335,7 +335,7 @@ vnoremap <leader>y "+y
 " 设置快捷键将系统剪贴板内容粘贴至 vim
 nmap <leader>p "+p
 " 定义快捷键关闭当前分割窗口
-nmap <Leader>q :q<CR>
+nmap <Leader>q :qa<CR>
 " 定义快捷键保存当前窗口内容
 nmap <leader>w :w<CR>
 " 定义快捷键保存所有窗口内容并退出 vim
@@ -354,3 +354,6 @@ nnoremap <leader>kw <C-W>k
 nnoremap <leader>jw <C-W>j
 " 定义快捷键在结对符之间跳转
 nmap <leader>M %
+
+set nofoldenable  "关闭自动折叠功能
+set updatetime=10
