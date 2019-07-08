@@ -357,3 +357,4 @@ nmap <leader>M %
 
 set nofoldenable  "关闭自动折叠功能
 set updatetime=10
+let g:vim_markdown_folding_disabled=1 "关闭markdown的自动折叠功能
