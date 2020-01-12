@@ -1,0 +1,9 @@
+#!/bin/bash
+
+sudo apt-get update
+sudo apt-get install python-pip
+sudo pip install shadowsocks
+sudo pip install -U git+https://github.com/shadowsocks/shadowsocks.git@master
+
+cp proxychains.conf ssclient.conf /etc/
+

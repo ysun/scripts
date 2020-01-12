@@ -37,6 +37,7 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'iamcco/markdown-preview.vim'
 Plugin 'iamcco/mathjax-support-for-mkdp'
 
+Plugin 'leafgarland/typescript-vim'
 "Bundle 'bling/vim-airline'
 
 " All of your Plugins must be added before the following line
