@@ -69,7 +69,7 @@ nnoremap <leader>jl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>jf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>jg :YcmCompleter GoToDefinitionElseDeclaration<CR> "按,jg 会跳转到
 
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>
 
 " 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
 "let g:ycm_confirm_extra_conf=0    "打开vim时不再询问是否加载ycm_extra_conf.py配置
@@ -283,6 +283,7 @@ nmap <C-k>d :bd<CR>
 nmap <C-k>D :bd!<CR>
 
 nmap <F3> :vim /<C-R>=expand("<cword>")<CR>/%<CR>
+map <F5> :e<CR>
 
 for f in split(glob('~/.vim/plugin/*.vim'), '\n')
     exe 'source' f
