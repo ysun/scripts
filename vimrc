@@ -37,7 +37,9 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'iamcco/markdown-preview.vim'
 Plugin 'iamcco/mathjax-support-for-mkdp'
 
-Plugin 'leafgarland/typescript-vim'
+Plugin 'racer-rust/vim-racer'          " 插件列表1
+Plugin 'rust-lang/rust.vim'            " 插件列表1
+
 "Bundle 'bling/vim-airline'
 
 " All of your Plugins must be added before the following line
@@ -69,7 +71,7 @@ nnoremap <leader>jl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>jf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>jg :YcmCompleter GoToDefinitionElseDeclaration<CR> "按,jg 会跳转到
 
-nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 
 " 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
 "let g:ycm_confirm_extra_conf=0    "打开vim时不再询问是否加载ycm_extra_conf.py配置
@@ -283,7 +285,6 @@ nmap <C-k>d :bd<CR>
 nmap <C-k>D :bd!<CR>
 
 nmap <F3> :vim /<C-R>=expand("<cword>")<CR>/%<CR>
-map <F5> :e<CR>
 
 for f in split(glob('~/.vim/plugin/*.vim'), '\n')
     exe 'source' f
@@ -360,3 +361,9 @@ nmap <leader>M %
 set nofoldenable  "关闭自动折叠功能
 set updatetime=10
 let g:vim_markdown_folding_disabled=1 "关闭markdown的自动折叠功能
+
+set hidden
+let g:racer_cmd = "/root/.cargo/bin/racer"
+let g:racer_experimental_completer = 1
+let g:racer_insert_paren = 1
+
