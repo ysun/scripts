@@ -484,3 +484,6 @@ let g:racer_insert_paren = 1
   au Syntax * RainbowParenthesesLoadRound
   au Syntax * RainbowParenthesesLoadSquare
   au Syntax * RainbowParenthesesLoadBraces
+
+  "Following is my configure!
+colorscheme desert
