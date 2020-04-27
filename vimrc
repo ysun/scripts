@@ -40,6 +40,15 @@ Plugin 'iamcco/mathjax-support-for-mkdp'
 Plugin 'racer-rust/vim-racer'          " 插件列表1
 Plugin 'rust-lang/rust.vim'            " 插件列表1
 
+Plugin 'ntpeters/vim-better-whitespace'	"行末空格
+"https://github.com/ntpeters/vim-better-whitespace
+
+Plugin 'kien/rainbow_parentheses.vim'
+"https://github.com/kien/rainbow_parentheses.vim
+
+"Plugin 'nathanaelkane/vim-indent-guides' "缩进参考线 -- not work
+"Plugin 'Yggdroot/indentLine' 		"缩进参考线
+
 "Bundle 'bling/vim-airline'
 
 " All of your Plugins must be added before the following line
@@ -367,3 +376,63 @@ let g:racer_cmd = "/root/.cargo/bin/racer"
 let g:racer_experimental_completer = 1
 let g:racer_insert_paren = 1
 
+
+" let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_start_level = 1           "添加行，开始显示对齐线的缩进级别
+" let g:indent_guides_guide_size = 1            "添加行，对齐线的宽度，（1字符）
+" let g:indent_guides_tab_guides = 0            "添加行，对tab对齐的禁用
+" 
+" hi IndentGuidesOdd ctermbg=black
+" hi IndentGuidesEven ctermbg=darkgrey
+" hi IndentGuidesOdd ctermbg=white
+" hi IndentGuidesEven ctermbg=lightgrey
+" set background=dark
+" 
+" let g:indent_guides_auto_colors = 0
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd guibg=blue ctermbg=3
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+
+"let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+"let g:indentLine_concealcursor = 'inc'
+"let g:indentLine_conceallevel = 1
+"let g:indentLine_setConceal = 0
+"let g:indentLine_enabled = 1
+
+
+" ********** "rainbow_parentheses 括号高亮增强版" **********
+  let g:rbpt_colorpairs = [
+      \ ['brown',       'RoyalBlue3'],
+      \ ['gray',        'RoyalBlue3'],
+      \ ['Darkblue',    'SeaGreen3'],
+      \ ['darkgreen',   'firebrick3'],
+      \ ['darkcyan',    'RoyalBlue3'],
+      \ ['darkred',     'SeaGreen3'],
+      \ ['gray',        'RoyalBlue3'],
+      \ ]
+
+  " let g:rbpt_colorpairs = [
+  "     \ ['gray',        'RoyalBlue3'],
+  "     \ ['brown',       'RoyalBlue3'],
+  "     \ ['Darkblue',    'SeaGreen3'],
+  "     \ ['darkgray',    'DarkOrchid3'],
+  "     \ ['darkgreen',   'firebrick3'],
+  "     \ ['darkcyan',    'RoyalBlue3'],
+  "     \ ['darkred',     'SeaGreen3'],
+  "     \ ['darkmagenta', 'DarkOrchid3'],
+  "     \ ['brown',       'firebrick3'],
+  "     \ ['darkmagenta', 'DarkOrchid3'],
+  "     \ ['Darkblue',    'firebrick3'],
+  "     \ ['darkgreen',   'RoyalBlue3'],
+  "     \ ['darkcyan',    'SeaGreen3'],
+  "     \ ['darkred',     'DarkOrchid3'],
+  "     \ ]
+
+  " 不加入这行, 防止黑色括号出现, 很难识别
+  "    \ ['black',       'SeaGreen3'],
+  let g:rbpt_max = 16   " 开启16对括号匹配
+  let g:rbpt_loadcmd_toggle = 0
+
+  au VimEnter * RainbowParenthesesToggle
+  au VimEnter * RainbowParenthesesLoadRound
+  au VimEnter * RainbowParenthesesLoadSquare
+  au VimEnter * RainbowParenthesesLoadBraces
