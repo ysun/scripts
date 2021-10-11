@@ -1,0 +1,125 @@
+set realname="Yi Sun"
+set from=yi.sun@linux.intel.com
+set use_from=yes
+
+# Setting  
+set visual=vim
+set header_cache="/root/.mutt/cache/"
+set message_cachedir ="/root/.mutt/cache/"
+
+# set pop_user="yi.sun"
+# set pop_host="linux.intel.com:995"
+# set pop_pass=<passwd>
+# set pop_host="pops://yi.sun@linux.intel.com:995"
+set folder="imaps://yi.sun@linux.intel.com:993/"
+set imap_pass=<passwd>  #this passwd is from access @linux.intel.com
+set mail_check=5
+set timeout=15
+# set spoolfile="imaps://yi.sun@linux.intel.com/INBOX/"
+set spoolfile="+INBOX"
+set postponed="+DRAFT"
+set mbox="+INBOX"
+set record="+SENT"
+set imap_check_subscribed
+set ssl_ca_certificates_file="~/.mutt/certs/IntelSHA256RootCA-base64.crt"
+#set certificate_file="~/.mutt/certificates"
+set ssl_starttls=yes
+set smtp_pass=<passwd>  #this is passwd of domain, laptop.
+set smtp_url="smtp://ysun46@smtpauth.intel.com:587"
+# set sort_browser=date
+
+# sidebar patch config
+set sidebar_visible
+set sidebar_short_path
+set sidebar_folder_indent
+set sidebar_width = 25
+set sidebar_divider_char = ' | '
+set sidebar_indent_string = '  
+set sidebar_format = "%B %* [%?N?%N / ?%S]"
+
+# compose View Options
+set envelope_from                    # which from?
+set edit_headers                     # show headers when composing
+set fast_reply                       # skip to compose when replying
+set askcc                            # ask for CC:
+set fcc_attach                       # save attachments with the body
+set forward_format = "Fwd: %s"       # format of subject when forwarding
+set forward_decode                   # decode when forwarding
+set attribution = "On %d, %n wrote:" # format of quoting header
+set reply_to                         # reply to Reply to: field
+set reverse_name                     # reply as whomever it was to
+set include                          # include message in replies
+set forward_quote                    # include message in forwards
+set editor = "vim"
+set text_flowed
+unset sig_dashes                     # no dashes before sig
+unset mime_forward                   # forward attachments as part of body
+
+# status bar, date format, finding stuff etc.
+set status_chars = " *%A"
+set status_format = "[ Folder: %f ] [%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]%>─%?p?( %p postponed )?"
+set date_format = "%d.%m.%Y %H:%M"
+set index_format = "[%Z] %?X?A&-? %D  %-20.20F  %s"
+set sort = threads
+set sort_aux = reverse-last-date-received
+set uncollapse_jump
+set sort_re
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\^+\] *)?)*"
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set send_charset = "utf-8:iso-8859-1:us-ascii"
+set charset = "utf-8"
+
+# Pager View Options
+set pager_index_lines = 10
+set pager_context = 3
+set pager_stop
+set menu_scroll
+set tilde
+unset markers
+
+# email headers and attachments
+ignore *
+unignore from: to: cc: bcc: date: subject:
+unhdr_order *
+hdr_order from: to: cc: bcc: date: subject:
+alternative_order text/plain text/enriched text/html
+auto_view text/html
+# when composing emails, use this command to get addresses from
+# the addressbook with khard first, and everything else from mu index
+set query_command = "( khard email --parsable '%s' | sed -n '1!p'; mu cfind --format=mutt-ab '%s' )"
+
+# Mailboxes to show in the sidebar.
+mailboxes "====Local==="
+mailboxes "~/Mail/yi.sun@linux.intel.com/INBOX"
+mailboxes "~/Mail/yi.sun@linux.intel.com/SENT"
+mailboxes "~/Mail/yi.sun@linux.intel.com/DRAFT"
+
+mailboxes "====Remote==="
+mailboxes +INBOX
+mailboxes +SENT
+mailboxes +DRAFT
+
+color index blue default "~N" # new messages
+# some sane vim-like keybindings
+bind index,pager k previous-entry
+bind index,pager j next-entry
+bind index,pager g noop
+bind index,pager \Cu half-up
+bind index,pager \Cd half-down
+bind pager gg top
+bind index gg first-entry
+bind pager G bottom
+bind index G last-entry
+#bind index G imap-fetch-mail
+
+# Sidebar Navigation
+bind index,pager <down> sidebar-next
+bind index,pager <up> sidebar-prev
+bind index,pager <right> sidebar-open
+
+# global index and pager shortcuts
+bind index,pager @ compose-to-sender
+bind index,pager R group-reply
+bind index,pager D purge-message
+bind index <tab> sync-mailbox
+bind index <space> collapse-thread
