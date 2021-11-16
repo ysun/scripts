@@ -1,0 +1,9 @@
+[Unit]
+After=network.service
+[Service]
+ExecStart=/root/start_x11vnc.sh
+SuccessExitStatus=999
+Restart=on-failure
+RestartSec=1s
+[Install]
+WantedBy=default.target
