@@ -1,0 +1,11 @@
+Host github.com
+	HostName github.com
+    IdentityFile ~/.ssh/id_rsa_station
+    #IdentityFile ~/.ssh/id_rsa_cafe
+    #ProxyCommand nc -x child-prc.intel.com:1080 %h %p
+    ProxyCommand nc -x child-prc.intel.com:913 -X connect %h %p
+
+Host githubintel.com
+	HostName github.com
+    IdentityFile ~/.ssh/id_rsa_cafe
+    ProxyCommand nc -x child-prc.intel.com:1080 %h %p
