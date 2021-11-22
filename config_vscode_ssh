@@ -1,0 +1,25 @@
+# Read more about SSH config files: https://linux.die.net/man/5/ssh_config
+Host sunyi-station
+    HostName 10.239.161.10
+    User root
+
+# Jump box with public IP address
+Host bridge
+    HostName 10.239.48.188
+    User root
+#    IdentityFile ~/.ssh/jumpbox
+
+# Target machine with private IP address
+Host skl-server
+    HostName 10.239.48.10
+    User root
+    ProxyCommand C:\Windows\System32\OpenSSH\ssh.exe -q -W %h:%p bridge
+#    IdentityFile ~/.ssh/target
+Host sunyi-nuc
+    HostName 10.239.48.3
+    User root
+    ProxyJump root@10.239.48.188
+    #ProxyCommand C:\Windows\System32\OpenSSH\ssh.exe -q -W %h:%p root@10.239.48.188
+    #ProxyJump bridge
+#    IdentityFile ~/.ssh/target
+    #ProxyCommand ssh -q -W %h:%p root@10.239.48.188
