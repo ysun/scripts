@@ -6,7 +6,8 @@
     {
       "label": "vm",
       "type": "shell",
-      "command": "qemu-system-x86_64 -enable-kvm -m 2048 -smp 1 -cpu max -s -S -kernel /home/works/linux-stable/arch/x86/boot/bzImage -hda /home/works/kvm/ubuntu20.10_mini.img -vga none -nodefaults -nographic -append \"root=/dev/sda3 nokaslr console=ttyS0\" -serial mon:stdio -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::5555-:22",
+      "command": "`pwd`/.vscode/start_vm_qemu_mini_iommu.sh",
+      //"command": "qemu-system-x86_64 -enable-kvm -m 2048 -smp 1 -cpu max -s -S -kernel /home/works/linux-stable/arch/x86/boot/bzImage -hda /home/works/kvm/ubuntu20.10_mini.img -vga none -nodefaults -nographic -append \"root=/dev/sda3 nokaslr console=ttyS0\" -serial mon:stdio -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::5555-:22",
       "presentation": {
         "echo": true,
         "clear": true,

@@ -19,6 +19,7 @@
         "MIMode": "gdb",
         "miDebuggerArgs": "-n",
         "targetArchitecture": "x64",
+        "hardwareBreakpoints": { "require": true},
         //"logging": { "engineLogging": true },
         "setupCommands": [
           {
