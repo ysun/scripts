@@ -16,6 +16,8 @@ chroot-cmd()
     [[ "$1" != "" ]] && echo $1 | arch-chroot $vmnamedir
 }
 
+apt install -y gdisk debootstrap arch-install-scripts
+
 dd if=/dev/zero of=$vmname bs=1M count=`expr 1024 \* $vmsize `
 sgdisk -n 1:0:+1G -n 2:0:+1G -n 3:0: -t 1:ef00 -t 2:8200 -t 3:8300 $vmname -p
 
