@@ -60,6 +60,7 @@ chroot-cmd "dpkg-reconfigure --frontend noninteractive locales"
 
 chroot-cmd "passwd -d root"
 chroot-cmd "grub-install"
+chroot-cmd "sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT.*$/GRUB_CMDLINE_LINUX_DEFAULT=\"console=tty0 console=ttyS0,115200n8\"/g' /etc/default/grub"
 chroot-cmd "grub-mkconfig -o /boot/grub/grub.cfg"
 
 # umount /mnt/boot/efi
