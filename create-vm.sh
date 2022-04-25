@@ -68,9 +68,16 @@ chroot-cmd "grub-mkconfig -o /boot/grub/grub.cfg"
 # qemu-system-x86_64 -enable-kvm -bios ovmf/OVMF_CODE.fd  -m 4G -M q35 -smp 2 -hda ubuntu22.04.img
 # qemu-system-x86_64 -enable-kvm -bios ovmf/OVMF_CODE.fd -vga none -nographic -m 4G -M q35 -smp 2 -hda ubuntu22.04.img
 
-# qemu-img resize ubuntu22.04.img +5G
-# newsize=`sgsgdisk  -p rootfs.img  |grep 'last usable sector is'|grep -o -E '[^ ]*$'`
-# sgdisk -d 3 -n 3:0:$newsize -t 3:8300 ubuntu22.04.img -p
-# resize2fs ${devnode}p3 13G
-# 
-# (in vm) resize2fs /dev/sda3 #<-- 必须
+# Risize the Image!!!
+# qemu-img resize $vmname +5G
+# Or dd if=/dev/zero bs=1M of=$vmname conv=notrunc oflag=append count=5120
+
+# sgdisk -d 3 -n 3:0: -t 3:8300 $vmname -p
+# newsize=`sgsgdisk  -p $vmname  |grep 'last usable sector is'|grep -o -E '[^ ]*$'`
+# sgdisk -d 3 -n 3:0:$newsize -t 3:8300 $vmname -p  //<--必须执行第二次
+# OR 执行两次！：
+#  sgdisk -d 3 -N 3 -t 3:8300 rootfs.img -p
+
+# resize2fs ${devnode}p3
+# Or
+# (in vm) resize2fs /dev/sda3
