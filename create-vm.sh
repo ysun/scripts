@@ -44,7 +44,7 @@ printf "deb http://archive.ubuntu.com/ubuntu/ ${release} main restricted univers
 printf "/dev/sda3  / ext4  rw,relatime     0 1 \n/dev/sda1  /boot/efi  vfat  rw,relatime,errors=remount-ro   0 2 \n/dev/sda2  none  swap  defaults   0 0\n" > $vmnamedir/etc/fstab
 
 chroot-cmd "apt update"
-chroot-cmd "apt-get install -y --no-install-recommends linux-generic linux-image-generic linux-headers-generic initramfs-tools linux-firmware efibootmgr tzdata grub-efi-amd64"
+chroot-cmd "apt-get install -y --no-install-recommends linux-generic linux-image-generic linux-headers-generic initramfs-tools linux-firmware efibootmgr tzdata grub-efi-amd64 openssh-server net-tools vim"
 
 chroot-cmd "echo 'tzdata tzdata/Areas select Asia' | debconf-set-selections"
 chroot-cmd "echo 'tzdata tzdata/Zones/Asia select Shanghai' | debconf-set-selections"
@@ -60,14 +60,34 @@ chroot-cmd "dpkg-reconfigure --frontend noninteractive locales"
 
 chroot-cmd "passwd -d root"
 chroot-cmd "grub-install"
-chroot-cmd "sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT.*$/GRUB_CMDLINE_LINUX_DEFAULT=\"console=tty0 console=ttyS0,115200n8\"/g' /etc/default/grub"
+chroot-cmd "sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT[^$]*/GRUB_CMDLINE_LINUX_DEFAULT=\"console=tty0 console=ttyS0,115200n8\"/g' /etc/default/grub"
 chroot-cmd "grub-mkconfig -o /boot/grub/grub.cfg"
 
-# umount /mnt/boot/efi
-# umount /mnt/
+#Install desktop
+chroot-cmd "apt install -y ubuntu-desktop"
+systemctl set-default graphical
 
-# qemu-system-x86_64 -enable-kvm -bios ovmf/OVMF_CODE.fd  -m 4G -M q35 -smp 2 -hda ubuntu22.04.img
-# qemu-system-x86_64 -enable-kvm -bios ovmf/OVMF_CODE.fd -vga none -nographic -m 4G -M q35 -smp 2 -hda ubuntu22.04.img
+chroot-cmd "sed -i 's/pam_succeed_if.so user != root quiet_success//g' /etc/pam.d/gdm-password"
+chroot-cmd "sed -i 's/pam_succeed_if.so user != root quiet_success//g' /etc/pam.d/gdm-autologin"
+chroot-cmd "sed -i 's/^.* AutomaticLoginEnable =.*$/AutomaticLoginEnable = true/g' /etc/gdm3/custom.conf"
+chroot-cmd "sed -i 's/^.* AutomaticLogin =.*$/AutomaticLogin = root\nAllowRoot=true/g' /etc/gdm3/custom.conf"
+
+chroot-cmd "sed -i 's/^[#\ ]*PermitRootLogin.*$/PermitRootLogin yes/g' /etc/ssh/sshd_config"
+chroot-cmd "sed -i 's/^[#\ ]*PermitEmptyPasswords no$/PermitEmptyPasswords yes/g' /etc/ssh/sshd_config"
+chroot-cmd "sed -i 's/^[#\ ]*UsePAM yes$/UsePAM no/g' /etc/ssh/sshd_config"
+
+chroot-cmd "printf 'network:\n  version: 2\n  renderer: NetworkManager\n  ethernets:\n    enp0s1:\n      dhcp4: true\n' > /etc/netplan/00-installer-config.yaml"
+chroot-cmd "netplan apply"
+
+umount /mnt/boot/efi
+umount /mnt/
+
+losetup -d $devnode
+
+# QEMU examples!!
+# qemu-system-x86_64 -enable-kvm -bios ovmf/OVMF_CODE.fd -m 4G -M q35 -smp 2 -hda ubuntu22.04.img
+# qemu-system-x86_64 -enable-kvm -bios ovmf/OVMF_CODE.fd -m 4G -M q35 -smp 2 -hda ubuntu22.04.img -vga none -nographic
+# qemu-system-x86_64 -enable-kvm -bios ovmf/OVMF_CODE.fd -m 4G -M q35 -smp 2 -hda rootfs.img -device virtio-net-pci,netdev=nic0,mac=00:16:3e:0c:12:78 -netdev tap,id=nic0,br=virbr0,helper=/usr/local/libexec/qemu-bridge-helper,vhost=on -vga none -nographic
 
 # Risize the Image!!!
 # qemu-img resize $vmname +5G
