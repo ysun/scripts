@@ -1,0 +1,7 @@
+#!/bin/bash
+qemu-system-x86_64 -m 2048 -smp 8 -M q35 --enable-kvm -hda /home/images/centos7.2ovmf.qcow2 -drive if=pflash,format=raw,readonly,file=/usr/share/ovmf/OVMF_CODE.fd -drive if=pflash,format=raw,file=/usr/share/ovmf/OVMF_VARS.fd 
+#qemu-system-x86_64 -m 2048 -smp 8 -M q35 --enable-kvm -hda /home/images/centos7.2ovmf.qcow2 -drive if=pflash,format=raw,readonly,file=/usr/share/ovmf/OVMF_CODE.fd -drive if=pflash,format=raw,file=/usr/share/ovmf/OVMF_VARS.fd -full-screen
+#qemu-system-x86_64 -m 2048 -smp 8 --enable-kvm -hda /home/images/centos7.2ovmf.qcow2 -drive if=pflash,format=raw,readonly,file=/usr/share/ovmf/OVMF_CODE.fd -drive if=pflash,format=raw,file=/usr/share/ovmf/OVMF_VARS.fd -full-screen
+
+#qemu-system-x86_64 -m 2048 -smp 8 --enable-kvm -cpu host -machine q35,kernel-irqchip=split -device intel-iommu,intremap=on  -hda /home/images/centos7.2ovmf.qcow2 -display sdl -boot menu=on  -cdrom  /home/images/CentOS-7-x86_64-DVD-1511.iso -chardev socket,path=/root/qga.sock,server,nowait,id=qga0 -device virtio-serial  -device virtserialport,chardev=qga0,name=org.qemu.guest_agent.0 -drive if=pflash,format=raw,readonly,file=/usr/share/ovmf/OVMF_CODE.fd -drive if=pflash,format=raw,file=/usr/share/ovmf/OVMF_VARS.fd
+#qemu-system-x86_64 -m 2048 --enable-kvm -hda /home/images/centos7.2.qcow2 -drive if=pflash,format=raw,readonly,file=/usr/share/ovmf/OVMF_CODE.fd -drive if=pflash,format=raw,file=/usr/share/ovmf/OVMF_VARS.fd  -cdrom /home/images/CentOS-7-x86_64-DVD-1511.iso -boot menu=on
