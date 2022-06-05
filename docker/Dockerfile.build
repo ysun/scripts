@@ -1,0 +1,16 @@
+FROM ubuntu:22.04
+
+ENV http_proxy=http://child-prc.intel.com:913
+ENV https_proxy=http://child-prc.intel.com:913
+
+RUN apt update
+RUN apt install gcc make -y
+RUN apt install libelf1 libelf-dev bc libncurses-dev -y
+RUN apt install librpm-dev rpm libcap-dev libnl-3-dev libnl-genl-3-dev uuid uuid-dev rsync bzip2 -y
+RUN apt install vim -y
+
+RUN mkdir -p /src
+WORKDIR /src
+
+CMD ["sh"]
+
