@@ -7,9 +7,13 @@ RUN apt update
 RUN apt install gcc make -y
 RUN apt install libelf1 libelf-dev bc libncurses-dev -y
 RUN apt install librpm-dev rpm libcap-dev libnl-3-dev libnl-genl-3-dev uuid uuid-dev rsync bzip2 -y
-RUN apt install vim -y
+RUN apt install vim lcov -y
 
 RUN mkdir -p /src
+RUN mkdir -p /out
+
+COPY collect_gcov.sh /usr/bin/
+
 WORKDIR /src
 
 CMD ["sh"]
