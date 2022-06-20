@@ -20,4 +20,4 @@ lcov:
 	docker run -it --rm -v $(SRC_GCOV):/src -v $(OUTPUT):/out ubuntu:22.04 bash -c 'collect_gcov.sh lcov $(OUTPUT)'
 	
 debug:
-	docker run -it --rm -v $(SRC_GCOV):/src -v $(OUTPUT):/out ubuntu:22.04 bash
+	docker run -it --rm -v $(PWD):/src -v $(OUTPUT):/out ubuntu:22.04 bash
